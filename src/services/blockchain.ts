@@ -1021,16 +1021,16 @@ class service_blockchain_init {
       'api.0x.org/swap/v1/quote' +
       query;
 
-    const api_key_0x: string = this.api_keys_0x[this.api_keys_0x_index];
-    const res: any = await axios.get(url, {
-      headers: { '0x-api-key': api_key_0x },
-    });
-
     this.api_keys_0x_index++;
-
     if (this.api_keys_0x_index >= this.api_keys_0x.length) {
       this.api_keys_0x_index = 0;
     }
+
+    const api_key_0x: string = this.api_keys_0x[this.api_keys_0x_index];
+    console.log(api_key_0x);
+    const res: any = await axios.get(url, {
+      headers: { '0x-api-key': api_key_0x },
+    });
 
     return res.data;
   }
@@ -1046,16 +1046,17 @@ class service_blockchain_init {
       'api.0x.org/swap/v1/price' +
       query;
 
-    const api_key_0x: string = this.api_keys_0x[this.api_keys_0x_index];
-    const res: any = await axios.get(url, {
-      headers: { '0x-api-key': api_key_0x },
-    });
-
     this.api_keys_0x_index++;
 
     if (this.api_keys_0x_index >= this.api_keys_0x.length) {
       this.api_keys_0x_index = 0;
     }
+
+    const api_key_0x: string = this.api_keys_0x[this.api_keys_0x_index];
+    console.log(api_key_0x);
+    const res: any = await axios.get(url, {
+      headers: { '0x-api-key': api_key_0x },
+    });
 
     return res.data;
   }
