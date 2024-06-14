@@ -1118,7 +1118,7 @@ export class validator_blockchain_init {
       };
     }
 
-    if (credentials.origin !== 'https://app.' + config.env.URL_UI) {
+    if (credentials.origin !== 'https://' + config.env.URL_UI) {
       throw {
         message: 'something went wrong',
         code: `${err.section}:${err.type}`,
