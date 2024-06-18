@@ -31,12 +31,14 @@
     "mongodb": "^6.6.1",
     "nodemailer": "^6.9.13",
     "redis": "^4.6.13",
-    "validator": "^13.12.0"
+    "validator": "^13.12.0",
+    "ws": "^8.17.1"
   },
   "devDependencies": {
     "@types/node": "^20.12.12",
     "@types/nodemailer": "^6.4.15",
     "@types/validator": "^13.11.10",
+    "@types/ws": "^8.5.10",
     "typescript": "^5.4.5"
   }
 }
