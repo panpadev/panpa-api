@@ -46,6 +46,68 @@ function bind_settings_routes(
         }
       },
     },
+
+    total_supply_get: {
+      method: 'GET',
+      url: '/v1' + config.endpoints.settings_total_supply,
+      preValidation: mw.prevalidation(null, options),
+      handler: async function (request: any, reply: any) {
+        const credentials: any = {
+          ip: request.ip,
+        };
+
+        try {
+          const total_supply = await services.settings.get_total_supply(
+            credentials
+          );
+
+          reply.send(total_supply);
+        } catch (err: any) {
+          reply.status(422).send(err);
+        }
+      },
+    },
+
+    max_supply_get: {
+      method: 'GET',
+      url: '/v1' + config.endpoints.settings_max_supply,
+      preValidation: mw.prevalidation(null, options),
+      handler: async function (request: any, reply: any) {
+        const credentials: any = {
+          ip: request.ip,
+        };
+
+        try {
+          const max_supply = await services.settings.get_max_supply(
+            credentials
+          );
+
+          reply.send(max_supply);
+        } catch (err: any) {
+          reply.status(422).send(err);
+        }
+      },
+    },
+
+    circulating_supply_get: {
+      method: 'GET',
+      url: '/v1' + config.endpoints.settings_circulating_supply,
+      preValidation: mw.prevalidation(null, options),
+      handler: async function (request: any, reply: any) {
+        const credentials: any = {
+          ip: request.ip,
+        };
+
+        try {
+          const circulating_supply =
+            await services.settings.get_circulating_supply(credentials);
+
+          reply.send(circulating_supply);
+        } catch (err: any) {
+          reply.status(422).send(err);
+        }
+      },
+    },
   };
 
   // Route them in fastify

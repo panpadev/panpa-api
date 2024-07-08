@@ -21,7 +21,6 @@ class service_settings_init {
 
   constructor(options: any) {
     this.options = options;
-
     this.validator = new UTILS_SERVICES.validator_settings_init(options);
   }
 
@@ -29,6 +28,24 @@ class service_settings_init {
     const settings: string = await this.options.redis.get('settings');
     const result = JSON.parse(settings);
     return result;
+  }
+
+  async get_total_supply(credentials: any): Promise<any> {
+    const settings: string = await this.options.redis.get('settings');
+    const result = JSON.parse(settings);
+    return result.total_supply;
+  }
+
+  async get_max_supply(credentials: any): Promise<any> {
+    const settings: string = await this.options.redis.get('settings');
+    const result = JSON.parse(settings);
+    return result.max_supply;
+  }
+
+  async get_circulating_supply(credentials: any): Promise<any> {
+    const settings: string = await this.options.redis.get('settings');
+    const result = JSON.parse(settings);
+    return result.circulating_supply;
   }
 }
 

@@ -21,6 +21,9 @@ export default interface config_i {
     readonly mail_subscriptions: string;
 
     readonly settings: string;
+    readonly settings_total_supply: string;
+    readonly settings_max_supply: string;
+    readonly settings_circulating_supply: string;
 
     // BLOCKCHAIN ENDPOINTS
     readonly blockchain_tokens: string;

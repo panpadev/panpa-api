@@ -38,6 +38,9 @@ const config: config_i = {
     mail_subscriptions: '/email-subscriptions',
 
     settings: '/settings',
+    settings_total_supply: '/settings/total-supply',
+    settings_max_supply: '/settings/max-supply',
+    settings_circulating_supply: '/settings/circulating-supply',
 
     // BLOCKCHAIN ENDPOINTS
     blockchain_tokens: '/tokens',

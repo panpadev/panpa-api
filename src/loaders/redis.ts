@@ -20,6 +20,15 @@ async function load_redis(options: any) {
   // SETTINGS
   let settings = await client.get('settings');
 
+  await client.set(
+    'settings',
+    JSON.stringify({
+      total_supply: 369369369,
+      max_supply: 369369369,
+      circulating_supply: 313963963,
+    })
+  );
+
   if (!settings) {
     settings = JSON.stringify({
       test: '1',
