@@ -1118,12 +1118,14 @@ export class validator_blockchain_init {
       };
     }
 
+    /*
     if (credentials.origin !== 'https://' + config.env.URL_UI) {
       throw {
         message: 'something went wrong',
         code: `${err.section}:${err.type}`,
       };
-    }
+    } 
+    */
 
     if (!Object.keys(factory).includes(credentials.type)) {
       throw {
