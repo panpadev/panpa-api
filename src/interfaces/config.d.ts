@@ -60,7 +60,7 @@ export default interface config_i {
     readonly URL_API: string;
     readonly URL_UI: string;
 
-    readonly SECRET_KEY_CAPTCHA: string;
+    readonly API_KEY_CAPTCHA: string;
 
     readonly API_KEY_0X: string;
 

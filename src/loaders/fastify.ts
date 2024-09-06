@@ -28,6 +28,7 @@ async function load_fastify(options: any): Promise<FastifyInstance> {
     },
   });
 
+  // reset all headers to maximum security first with fastify/helmet, then configure
   await server.register(fastify_helmet, { global: true });
 
   await server.register(fastify_static, {
@@ -51,6 +52,8 @@ async function load_fastify(options: any): Promise<FastifyInstance> {
   // server.addHook('onRequest', async (request, reply) => {});
 
   bind_routes(server, options);
+
+  await server.listen({ port: Number(config.env.PORT), host: config.env.HOST });
 
   return server;
 }

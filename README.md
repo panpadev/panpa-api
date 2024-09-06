@@ -55,7 +55,7 @@ EMAIL_PASSWORD=
 URL_API=api.domain.com
 URL_UI=domain.com
 
-SECRET_KEY_CAPTCHA=0x123
+API_KEY_CAPTCHA=0x123
 
 ```
 

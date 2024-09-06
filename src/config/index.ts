@@ -77,7 +77,7 @@ const config: config_i = {
     URL_API: process.env.URL_API || '',
     URL_UI: process.env.URL_UI || '',
 
-    SECRET_KEY_CAPTCHA: process.env.SECRET_KEY_CAPTCHA || '',
+    API_KEY_CAPTCHA: process.env.API_KEY_CAPTCHA || '',
 
     // API KEYS
     API_KEY_0X: process.env.API_KEY_0X || '',

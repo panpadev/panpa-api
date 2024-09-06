@@ -48,8 +48,6 @@ async function init(): Promise<void> {
   // load_server returns a fastify instance with configured routes as well as mongodb database
   const server: FastifyInstance = await load_server();
 
-  await server.listen({ port: Number(config.env.PORT), host: config.env.HOST });
-
   console.info(`🛡️  Server listening on port: ${config.env.PORT} 🛡️`);
 }
 

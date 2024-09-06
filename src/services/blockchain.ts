@@ -1027,7 +1027,7 @@ class service_blockchain_init {
     }
 
     const api_key_0x: string = this.api_keys_0x[this.api_keys_0x_index];
-    console.log(api_key_0x);
+
     const res: any = await axios.get(url, {
       headers: { '0x-api-key': api_key_0x },
     });
@@ -1053,7 +1053,7 @@ class service_blockchain_init {
     }
 
     const api_key_0x: string = this.api_keys_0x[this.api_keys_0x_index];
-    console.log(api_key_0x);
+
     const res: any = await axios.get(url, {
       headers: { '0x-api-key': api_key_0x },
     });

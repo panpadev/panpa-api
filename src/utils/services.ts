@@ -13,7 +13,7 @@ import options_i from 'interfaces/common';
 import config from '../config';
 
 // COMMON UTILS
-import UTILS_COMMON, { str_remove_space } from './common';
+import UTILS_COMMON, { str_remove_space, random } from './common';
 
 ///////////////////////
 // AUTH UTILS
@@ -229,30 +229,26 @@ export class validator_auth_init {
   async signup(credentials: any): Promise<void> {
     const err = { section: 'auth', type: 'signup' };
 
-    credentials.name = UTILS_COMMON.str_remove_space(credentials.name);
+    credentials.name = str_remove_space(credentials.name);
 
-    credentials.email = UTILS_COMMON.str_remove_space(
-      credentials.email
-    ).toLowerCase();
+    credentials.email = str_remove_space(credentials.email).toLowerCase();
 
-    credentials.username = UTILS_COMMON.str_remove_space(
-      credentials.username
-    ).toLowerCase();
+    credentials.username = str_remove_space(credentials.username).toLowerCase();
 
-    credentials.phone = UTILS_COMMON.str_remove_space(credentials.phone);
+    credentials.phone = str_remove_space(credentials.phone);
 
     /*
     if (!credentials.username) {
       let length: number = 8;
 
-      credentials.username = UTILS_COMMON.random({ length: length });
+      credentials.username = random({ length: length });
       let existing_user = await this.options.db.users.findOne({
         username: credentials.username,
       });
 
       while (existing_user) {
         length++;
-        credentials.username = UTILS_COMMON.random({ length: length });
+        credentials.username = random({ length: length });
         existing_user = await this.options.db.users.findOne({
           username: credentials.username,
         });
@@ -362,7 +358,7 @@ export class validator_auth_init {
       'response=' +
       credentials.captcha_token +
       '&secret=' +
-      config.env.SECRET_KEY_CAPTCHA;
+      config.env.API_KEY_CAPTCHA;
 
     const catpcha_response: any = await axios.post(
       'https://api.hcaptcha.com/siteverify',
@@ -569,7 +565,7 @@ export class validator_auth_init {
       };
     }
 
-    credentials.email = UTILS_COMMON.str_remove_space(credentials.email);
+    credentials.email = str_remove_space(credentials.email);
 
     if (!validator.isEmail(credentials.email)) {
       throw { message: 'invalid email', type: `${err.section}:${err.type}` };
@@ -647,7 +643,7 @@ export class validator_auth_init {
 async function generate_ref_code(options: any): Promise<string> {
   const length: number = 8;
 
-  let code: string = UTILS_COMMON.random({
+  let code: string = random({
     length: length,
     type: 'distinguishable',
   });
@@ -657,7 +653,7 @@ async function generate_ref_code(options: any): Promise<string> {
   });
 
   while (user) {
-    code = UTILS_COMMON.random({ length: length, type: 'distinguishable' });
+    code = random({ length: length, type: 'distinguishable' });
     user = await options.db.users.findOne({ ref_code: code });
   }
 
@@ -668,14 +664,14 @@ export async function create_session(
   payload: any,
   options: any
 ): Promise<string> {
-  let sid: string = UTILS_COMMON.random({ length: 128 });
+  let sid: string = random({ length: 128 });
   let session_existing: string | null = await options.redis.hGet(
     'sessions',
     sid
   );
 
   while (session_existing) {
-    sid = UTILS_COMMON.random({ length: 128 });
+    sid = random({ length: 128 });
     session_existing = await options.redis.hGet('sessions', sid);
   }
 
@@ -692,13 +688,13 @@ export async function create_session(
 export async function generate_email_verification_token(
   options: any
 ): Promise<string> {
-  let token: string = UTILS_COMMON.random({ length: 64 });
+  let token: string = random({ length: 64 });
   let user: Document | null = await options.db.users.findOne({
     email_verification_token: token,
   });
 
   while (user) {
-    token = UTILS_COMMON.random({ length: 64 });
+    token = random({ length: 64 });
     user = await options.db.users.findOne({
       email_verification_token: token,
     });
@@ -710,13 +706,13 @@ export async function generate_email_verification_token(
 export async function generate_password_reset_token(
   options: any
 ): Promise<string> {
-  let token: string = UTILS_COMMON.random({ length: 64 });
+  let token: string = random({ length: 64 });
   let user: Document | null = await options.db.users.findOne({
     password_reset_token: token,
   });
 
   while (user) {
-    token = UTILS_COMMON.random({ length: 64 });
+    token = random({ length: 64 });
     user = await options.db.users.findOne({
       password_reset_token: token,
     });
@@ -788,12 +784,12 @@ export async function create_user_doc(
 
   const doc: any = {
     // auth validator signup configures extra spaces and lowercase chars, you dont have to worry
-    name: UTILS_COMMON.str_remove_space(credentials.name),
+    name: str_remove_space(credentials.name),
 
-    username: UTILS_COMMON.str_remove_space(credentials.username).toLowerCase(),
+    username: str_remove_space(credentials.username).toLowerCase(),
     username_changed_at: null,
 
-    email: UTILS_COMMON.str_remove_space(credentials.email).toLowerCase(),
+    email: str_remove_space(credentials.email).toLowerCase(),
     email_verified: false,
     email_verification_token: email_verification_token,
     email_verification_token_exp_at: new Date(
@@ -1054,7 +1050,7 @@ export function generate_html(type = 'email-verify', payload: any): string {
 
 export function create_subscription_email_doc(credentials: any): object {
   const doc: any = {
-    email: UTILS_COMMON.str_remove_space(credentials.email).toLowerCase(),
+    email: str_remove_space(credentials.email).toLowerCase(),
     created_at: new Date(),
     updated_at: new Date(),
   };
@@ -1086,25 +1082,20 @@ export class validator_blockchain_init {
   async get_tokens(credentials: any, chains: any): Promise<any> {
     const err = { section: 'blockchain', type: 'tokens-get' };
 
-    if (!credentials.chain_id) {
-      throw {
-        message: 'missing credentials',
-        code: `${err.section}:${err.type}`,
-      };
-    }
+    if (credentials.chain_id) {
+      if (!Number(credentials.chain_id)) {
+        throw {
+          message: 'invalid chain id',
+          code: `${err.section}:${err.type}`,
+        };
+      }
 
-    if (!Number(credentials.chain_id)) {
-      throw {
-        message: 'invalid chain id',
-        code: `${err.section}:${err.type}`,
-      };
-    }
-
-    if (!Object.keys(chains).includes(credentials.chain_id)) {
-      throw {
-        message: 'unsupported chain id',
-        code: `${err.section}:${err.type}`,
-      };
+      if (!Object.keys(chains).includes(credentials.chain_id)) {
+        throw {
+          message: 'unsupported chain id',
+          code: `${err.section}:${err.type}`,
+        };
+      }
     }
   }
 
@@ -1257,7 +1248,7 @@ export class validator_blockchain_init {
       'response=' +
       credentials.captcha_token +
       '&secret=' +
-      config.env.SECRET_KEY_CAPTCHA;
+      config.env.API_KEY_CAPTCHA;
 
     const catpcha_response: any = await axios.post(
       'https://api.hcaptcha.com/siteverify',
