@@ -1,6 +1,8 @@
 # Features:
 
 - Secure Cookie Authentication for User Communication
+- 0x.org API ready endpoints
+- coingecko.com tokens API ready endpoints
 - Simple Admin-User Role System
 - Simple User Reference System
 - Media Upload through File System
@@ -34,29 +36,37 @@ $ npm run start
 Then create a .env file in the root of the project and enter your environment values.
 
 ```.env
-PORT=3000
+PORT=3001
 HOST=127.0.0.1
 
 NODE_ENV=prod
 
-SESSION_SECRET=
-SESSION_NAME=domain_sid
+SESSION_SECRET=SECURE_RANDOM_STRING
+SESSION_NAME=panpa_sid
 
-DB_CONN_STR=
-DB_NAME=domain
+DB_CONN_STR=YOUR_MONGODB_CONNECTION_STRING
+DB_NAME=panpa
 
-PERM_ADMIN=123
-PERM_USER=123
+PERM_ADMIN=SECURE_RANDOM_STRING
+PERM_USER=SECURE_RANDOM_STRING
 
 EMAIL_HOST=smtp.gmail.com
-EMAIL_USERNAME=no-reply@domain.com
-EMAIL_PASSWORD=
+EMAIL_USERNAME=mail@panpa.dev
+EMAIL_PASSWORD=123
 
-URL_API=api.domain.com
-URL_UI=domain.com
+URL_API=api.panpa.dev
+URL_UI=panpa.dev
 
-API_KEY_CAPTCHA=0x123
+API_KEY_CAPTCHA=YOUR_HCAPTCHA_API_KEY
 
+API_KEY_0X=YOUR_0X_API_KEY
+
+API_KEY_ETHERSCAN=YOUR_ETHERSCAN_API_KEY
+API_KEY_BSCSCAN=YOUR_BSCSCAN_API_KEY
+API_KEY_ARBISCAN=YOUR_ARBISCAN_API_KEY
+API_KEY_POLYGONSCAN=YOUR_POLYGONSCAN_API_KEY
+API_KEY_FTMSCAN=YOUR_FTMSCAN_API_KEY
+API_KEY_CELOSCAN=YOUR_CELOSCAN_API_KEY
 ```
 
 Run start first to create the db collections then run your tests.
