@@ -42,7 +42,9 @@ function bind_auth_routes(
         };
 
         try {
-          reply.send(req);
+          reply.send(
+            '<a href="https://docs.panpa.dev" target="_blank"> <h1>Go to Documentation 🗂️</h1> </a>'
+          );
         } catch (err: any) {
           reply.status(422).send(err);
         }
