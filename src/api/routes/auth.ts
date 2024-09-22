@@ -45,7 +45,7 @@ function bind_auth_routes(
           reply
             .type('text/html')
             .send(
-              '<a href="https://docs.panpa.dev" target="_blank"> <h1>Go to Documentation 🗂️</h1> </a>'
+              '<a href="https://docs.panpa.dev" target="_blank"> <h1>Go to Documentation</h1> </a>'
             );
         } catch (err: any) {
           reply.status(422).send(err);
@@ -60,8 +60,6 @@ function bind_auth_routes(
           sid: request.cookies[config.env.SESSION_NAME],
           ip: request.ip,
         };
-
-        console.log(credentials.sid);
 
         try {
           const profile = await services.auth.get_profile(credentials);

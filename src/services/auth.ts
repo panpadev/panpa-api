@@ -12,7 +12,7 @@ import config from '../config';
 
 // UTILS
 import UTILS_SERVICES from '../utils/services';
-import UTILS_COMMON from '../utils/common';
+import { random } from '../utils/common';
 
 class service_auth_init {
   private options: any;
@@ -74,8 +74,7 @@ class service_auth_init {
       const base64_data: string = base64_buffer[1];
 
       const file_ext: string = base64_type.split('/')[1];
-      const file_name: string =
-        UTILS_COMMON.random({ length: 32 }) + '.' + file_ext;
+      const file_name: string = random({ length: 32 }) + '.' + file_ext;
 
       // File system integration
 
@@ -83,15 +82,12 @@ class service_auth_init {
       const previous_img_parts: string[] = credentials.user.img.split('/');
       const previous_img_id: string =
         previous_img_parts[previous_img_parts.length - 1];
-      fs.unlink('public/images/' + previous_img_id, function (err: any) {});
+      fs.unlinkSync('public/images/' + previous_img_id);
 
       // Write new base64 buffer to file asynchronously
-      fs.writeFile(
-        'public/images/' + file_name,
-        base64_data,
-        { encoding: 'base64' },
-        function (err: any) {}
-      );
+      fs.writeFileSync('public/images/' + file_name, base64_data, {
+        encoding: 'base64',
+      });
 
       img = 'https://' + config.env.URL_API + '/public/images/' + file_name;
     }
@@ -128,9 +124,10 @@ class service_auth_init {
       }
     );
 
-    credentials.user.name = credentials.name;
-    credentials.user.username = credentials.username;
-    credentials.user.phone = credentials.phone;
+    credentials.user.name = credentials.name || credentials.user.name;
+    credentials.user.username =
+      credentials.username || credentials.user.username;
+    credentials.user.phone = credentials.phone || credentials.user.phone;
     credentials.user.img = img || credentials.user.img;
     credentials.user.api_key = api_key || credentials.user.api_key;
 

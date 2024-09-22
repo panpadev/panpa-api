@@ -28,18 +28,19 @@ export class validator_common_init {
   static base64(base64: string, err: any) {
     if (typeof base64 !== config.types.string) {
       throw {
-        message: 'base64 is invalid type',
+        message: 'invalid credentials',
         type: `${err.section}:${err.type}`,
       };
     }
 
     if (base64.length > 1000000) {
       throw {
-        message: 'Logo is too big, 1mb max',
+        message: 'credentials are too big',
         type: `${err.section}:${err.type}`,
       };
     }
 
+    // allowed image types
     if (
       !base64.startsWith('data:image/png;base64,') &&
       !base64.startsWith('data:image/jpg;base64,') &&
@@ -47,7 +48,7 @@ export class validator_common_init {
       !base64.startsWith('data:image/webp;base64,')
     ) {
       throw {
-        message: 'invalid file format',
+        message: 'invalid credentials',
         type: `${err.section}:${err.type}`,
       };
     }
@@ -59,27 +60,14 @@ export class validator_common_init {
 
     if (!validator.isBase64(base64) && !validator.isBase64(base64_data)) {
       throw {
-        message: 'Invalid base64 string',
+        message: 'invalid credentials',
         type: `${err.section}:${err.type}`,
       };
     }
 
-    if (!base64_type || !base64_data || !file_ext) {
+    if (!base64_data) {
       throw {
-        message: 'Invalid image file type (base64)',
-        type: `${err.section}:${err.type}`,
-      };
-    }
-
-    // TODO improve
-    if (
-      !base64_type.includes('image/png') &&
-      !base64_type.includes('image/jpg') &&
-      !base64_type.includes('image/jpeg') &&
-      !base64_type.includes('image/webp')
-    ) {
-      throw {
-        message: 'Invalid image file type, acceptables (png, jpg, jpeg)',
+        message: 'missing credentials',
         type: `${err.section}:${err.type}`,
       };
     }
